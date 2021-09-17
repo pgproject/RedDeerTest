@@ -3,19 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
-public class StrightPlatform : MonoBehaviour
+public class StrightPlatform : MovementObject
 {
    [SerializeField] private PlatformType m_platformType;
-   [SerializeField] private Rigidbody m_rigidbody;
-   [SerializeField] private float m_startPosition, m_endPosition;
-   [SerializeField] private float m_speed;
    [SerializeField] private float m_waitTimeStartPoint, m_waitTimeEndPoint;
    
-   private float m_normalize;
-   private bool m_isMove;
-   private bool m_moveDirection;
-   private Vector2 m_startPoint
+   protected override Vector2 m_startPoint
    {
       get
       {
@@ -23,12 +16,11 @@ public class StrightPlatform : MonoBehaviour
          {
             return new Vector2(m_startPosition, transform.position.y);
          }
-
          return new Vector2(transform.position.x, m_startPosition);
       }
    }
 
-   private Vector2 m_endPoint
+   protected override Vector2 m_endPoint
    {
       get
       {
@@ -41,16 +33,14 @@ public class StrightPlatform : MonoBehaviour
       }
    }
 
-   private float m_length => Mathf.Abs(m_startPosition) + Mathf.Abs(m_endPosition);
 
    private void Start()
    {
       StartCoroutine(Move());
    }
 
-   private IEnumerator Move()
+   protected override IEnumerator Move()
    {
-      m_isMove = true;
       while (true)
       {
          m_normalize += Time.fixedDeltaTime / m_length * m_speed * (m_moveDirection ? -1 : 1);
@@ -72,8 +62,4 @@ public class StrightPlatform : MonoBehaviour
       }
    }
 
-   private void OnValidate()
-   {
-      m_rigidbody = GetComponent<Rigidbody>();
-   }
 }
