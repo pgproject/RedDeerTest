@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18ed3387d79f63d49bfae6c1b9f13f3d, type: 3}
+  m_Name: GeneralAccess
+  m_EditorClassIdentifier: 
+  m_inputAccess:
+    m_mouseDelta:
+      m_UseReference: 1
+      m_Action:
+        m_Name: Mouse Delta
+        m_Type: 0
+        m_ExpectedControlType: 
+        m_Id: ba127b03-f569-428f-a170-dbbc4d9ed9cc
+        m_Processors: 
+        m_Interactions: 
+        m_SingletonActionBindings: []
+      m_Reference: {fileID: 6039922489656286725, guid: 21386b387ccbc4d48af40d6ad4cebbf1, type: 3}
+    m_move:
+      m_UseReference: 1
+      m_Action:
+        m_Name: Move
+        m_Type: 0
+        m_ExpectedControlType: 
+        m_Id: 37430341-0bdb-46d9-a8f6-6d1e1dd1e8cb
+        m_Processors: 
+        m_Interactions: 
+        m_SingletonActionBindings: []
+      m_Reference: {fileID: -2679895700527277708, guid: 21386b387ccbc4d48af40d6ad4cebbf1, type: 3}
+  m_playerMovementStats:
+    m_smoothingCamera: 4
+    m_mouseSensitivity: 0.5
+    m_speedMoving: 2
+    m_minYRotation: -70
+    m_maxYRotation: 70
