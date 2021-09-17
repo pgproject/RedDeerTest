@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StrightPlatform : MovementObject
+public class StraightPlatform : MovementObject
 {
    [SerializeField] private PlatformType m_platformType;
    [SerializeField] private float m_waitTimeStartPoint, m_waitTimeEndPoint;
