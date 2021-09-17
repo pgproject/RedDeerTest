@@ -33,6 +33,14 @@ public class @Input : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Interaction"",
+                    ""type"": ""Button"",
+                    ""id"": ""4f4f9a0f-a472-4651-9db9-5c66ff0eb17d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -101,6 +109,17 @@ public class @Input : IInputActionCollection, IDisposable
                     ""action"": ""MouseDelta"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7d2b4af8-3b22-4f60-9fe5-4178fc4ca3ca"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interaction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -111,6 +130,7 @@ public class @Input : IInputActionCollection, IDisposable
         m_Movment = asset.FindActionMap("Movment", throwIfNotFound: true);
         m_Movment_Move = m_Movment.FindAction("Move", throwIfNotFound: true);
         m_Movment_MouseDelta = m_Movment.FindAction("MouseDelta", throwIfNotFound: true);
+        m_Movment_Interaction = m_Movment.FindAction("Interaction", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -162,12 +182,14 @@ public class @Input : IInputActionCollection, IDisposable
     private IMovmentActions m_MovmentActionsCallbackInterface;
     private readonly InputAction m_Movment_Move;
     private readonly InputAction m_Movment_MouseDelta;
+    private readonly InputAction m_Movment_Interaction;
     public struct MovmentActions
     {
         private @Input m_Wrapper;
         public MovmentActions(@Input wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Movment_Move;
         public InputAction @MouseDelta => m_Wrapper.m_Movment_MouseDelta;
+        public InputAction @Interaction => m_Wrapper.m_Movment_Interaction;
         public InputActionMap Get() { return m_Wrapper.m_Movment; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -183,6 +205,9 @@ public class @Input : IInputActionCollection, IDisposable
                 @MouseDelta.started -= m_Wrapper.m_MovmentActionsCallbackInterface.OnMouseDelta;
                 @MouseDelta.performed -= m_Wrapper.m_MovmentActionsCallbackInterface.OnMouseDelta;
                 @MouseDelta.canceled -= m_Wrapper.m_MovmentActionsCallbackInterface.OnMouseDelta;
+                @Interaction.started -= m_Wrapper.m_MovmentActionsCallbackInterface.OnInteraction;
+                @Interaction.performed -= m_Wrapper.m_MovmentActionsCallbackInterface.OnInteraction;
+                @Interaction.canceled -= m_Wrapper.m_MovmentActionsCallbackInterface.OnInteraction;
             }
             m_Wrapper.m_MovmentActionsCallbackInterface = instance;
             if (instance != null)
@@ -193,6 +218,9 @@ public class @Input : IInputActionCollection, IDisposable
                 @MouseDelta.started += instance.OnMouseDelta;
                 @MouseDelta.performed += instance.OnMouseDelta;
                 @MouseDelta.canceled += instance.OnMouseDelta;
+                @Interaction.started += instance.OnInteraction;
+                @Interaction.performed += instance.OnInteraction;
+                @Interaction.canceled += instance.OnInteraction;
             }
         }
     }
@@ -201,5 +229,6 @@ public class @Input : IInputActionCollection, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnMouseDelta(InputAction.CallbackContext context);
+        void OnInteraction(InputAction.CallbackContext context);
     }
 }

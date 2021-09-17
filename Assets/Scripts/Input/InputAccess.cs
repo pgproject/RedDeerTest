@@ -21,4 +21,7 @@ public class InputAccess
     [SerializeField] private InputActionProperty m_move;
     public InputActionProperty Move => m_move;
 
+    [SerializeField] private InputActionProperty m_interactionButton;
+    public InputActionProperty InteractionButton => m_interactionButton;
+
 }

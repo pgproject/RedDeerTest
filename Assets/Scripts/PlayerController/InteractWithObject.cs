@@ -7,11 +7,8 @@ using UnityEngine;
 public class InteractWithObject : MonoBehaviour
 {
     private List<IInteractive> m_interactiveObject = new List<IInteractive>();
+    public List<IInteractive> InteractiveObject => m_interactiveObject;
     private const int LAYER_INTERACTIVE = 7;
-
-    private void Start()
-    {
-    }
 
     private void OnTriggerEnter(Collider other)
     {

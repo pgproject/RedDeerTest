@@ -35,6 +35,17 @@ MonoBehaviour:
         m_Interactions: 
         m_SingletonActionBindings: []
       m_Reference: {fileID: -2679895700527277708, guid: 21386b387ccbc4d48af40d6ad4cebbf1, type: 3}
+    m_interactionButton:
+      m_UseReference: 1
+      m_Action:
+        m_Name: Interaction Button
+        m_Type: 0
+        m_ExpectedControlType: 
+        m_Id: 0719d909-a147-45b3-abbf-4f1108a09883
+        m_Processors: 
+        m_Interactions: 
+        m_SingletonActionBindings: []
+      m_Reference: {fileID: -3767259417672380590, guid: 21386b387ccbc4d48af40d6ad4cebbf1, type: 3}
   m_playerMovementStats:
     m_smoothingCamera: 4
     m_mouseSensitivity: 0.5
