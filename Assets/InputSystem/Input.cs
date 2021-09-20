@@ -122,6 +122,115 @@ public class @Input : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""UI"",
+            ""id"": ""30aa861d-cd25-4710-b6d8-97e32771070a"",
+            ""actions"": [
+                {
+                    ""name"": ""Close"",
+                    ""type"": ""Button"",
+                    ""id"": ""5d373e16-0b0c-4d6a-a287-e612e8708642"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Ennter"",
+                    ""type"": ""Button"",
+                    ""id"": ""6a92f795-24e7-485e-850e-48314419f47f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Horizontal"",
+                    ""type"": ""Button"",
+                    ""id"": ""dcb46aa2-c5e5-44a4-9697-bcd2b80c2b55"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""6d5b091c-18d5-4015-b6ef-d4c83b4ca850"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Close"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4563a08a-5baa-437a-bfe0-558f23537a1a"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Ennter"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""39ba9c2b-2e66-42c3-8974-380bd992ed6f"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Horizontal"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""94eb9dfa-69ef-4607-a549-72f32cc48243"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Horizontal"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""3569ada2-05ed-4f23-8443-867666a9858b"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Horizontal"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""0b06bee0-cfd4-4705-b489-6974159555e8"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Horizontal"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""2d9d3fb2-c9db-4b1e-a568-bbf35445af4d"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Horizontal"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -131,6 +240,11 @@ public class @Input : IInputActionCollection, IDisposable
         m_Movment_Move = m_Movment.FindAction("Move", throwIfNotFound: true);
         m_Movment_MouseDelta = m_Movment.FindAction("MouseDelta", throwIfNotFound: true);
         m_Movment_Interaction = m_Movment.FindAction("Interaction", throwIfNotFound: true);
+        // UI
+        m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
+        m_UI_Close = m_UI.FindAction("Close", throwIfNotFound: true);
+        m_UI_Ennter = m_UI.FindAction("Ennter", throwIfNotFound: true);
+        m_UI_Horizontal = m_UI.FindAction("Horizontal", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -225,10 +339,65 @@ public class @Input : IInputActionCollection, IDisposable
         }
     }
     public MovmentActions @Movment => new MovmentActions(this);
+
+    // UI
+    private readonly InputActionMap m_UI;
+    private IUIActions m_UIActionsCallbackInterface;
+    private readonly InputAction m_UI_Close;
+    private readonly InputAction m_UI_Ennter;
+    private readonly InputAction m_UI_Horizontal;
+    public struct UIActions
+    {
+        private @Input m_Wrapper;
+        public UIActions(@Input wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Close => m_Wrapper.m_UI_Close;
+        public InputAction @Ennter => m_Wrapper.m_UI_Ennter;
+        public InputAction @Horizontal => m_Wrapper.m_UI_Horizontal;
+        public InputActionMap Get() { return m_Wrapper.m_UI; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(UIActions set) { return set.Get(); }
+        public void SetCallbacks(IUIActions instance)
+        {
+            if (m_Wrapper.m_UIActionsCallbackInterface != null)
+            {
+                @Close.started -= m_Wrapper.m_UIActionsCallbackInterface.OnClose;
+                @Close.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnClose;
+                @Close.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnClose;
+                @Ennter.started -= m_Wrapper.m_UIActionsCallbackInterface.OnEnnter;
+                @Ennter.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnEnnter;
+                @Ennter.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnEnnter;
+                @Horizontal.started -= m_Wrapper.m_UIActionsCallbackInterface.OnHorizontal;
+                @Horizontal.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnHorizontal;
+                @Horizontal.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnHorizontal;
+            }
+            m_Wrapper.m_UIActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Close.started += instance.OnClose;
+                @Close.performed += instance.OnClose;
+                @Close.canceled += instance.OnClose;
+                @Ennter.started += instance.OnEnnter;
+                @Ennter.performed += instance.OnEnnter;
+                @Ennter.canceled += instance.OnEnnter;
+                @Horizontal.started += instance.OnHorizontal;
+                @Horizontal.performed += instance.OnHorizontal;
+                @Horizontal.canceled += instance.OnHorizontal;
+            }
+        }
+    }
+    public UIActions @UI => new UIActions(this);
     public interface IMovmentActions
     {
         void OnMove(InputAction.CallbackContext context);
         void OnMouseDelta(InputAction.CallbackContext context);
         void OnInteraction(InputAction.CallbackContext context);
+    }
+    public interface IUIActions
+    {
+        void OnClose(InputAction.CallbackContext context);
+        void OnEnnter(InputAction.CallbackContext context);
+        void OnHorizontal(InputAction.CallbackContext context);
     }
 }
