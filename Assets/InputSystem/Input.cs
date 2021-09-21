@@ -15,7 +15,7 @@ public class @Input : IInputActionCollection, IDisposable
     ""name"": ""Input"",
     ""maps"": [
         {
-            ""name"": ""Movment"",
+            ""name"": ""Movement"",
             ""id"": ""ebac2b84-ca4c-4999-9985-a0c205d3986a"",
             ""actions"": [
                 {
@@ -38,6 +38,14 @@ public class @Input : IInputActionCollection, IDisposable
                     ""name"": ""Interaction"",
                     ""type"": ""Button"",
                     ""id"": ""4f4f9a0f-a472-4651-9db9-5c66ff0eb17d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Shoot"",
+                    ""type"": ""Button"",
+                    ""id"": ""1e0b51c5-856f-42b5-9923-ef7d63db3026"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -120,6 +128,17 @@ public class @Input : IInputActionCollection, IDisposable
                     ""action"": ""Interaction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""426a7700-0960-417d-a3cd-4f242a3d3a9d"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -136,7 +155,7 @@ public class @Input : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Ennter"",
+                    ""name"": ""Submit"",
                     ""type"": ""Button"",
                     ""id"": ""6a92f795-24e7-485e-850e-48314419f47f"",
                     ""expectedControlType"": ""Button"",
@@ -171,7 +190,7 @@ public class @Input : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Ennter"",
+                    ""action"": ""Submit"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -235,15 +254,16 @@ public class @Input : IInputActionCollection, IDisposable
     ],
     ""controlSchemes"": []
 }");
-        // Movment
-        m_Movment = asset.FindActionMap("Movment", throwIfNotFound: true);
-        m_Movment_Move = m_Movment.FindAction("Move", throwIfNotFound: true);
-        m_Movment_MouseDelta = m_Movment.FindAction("MouseDelta", throwIfNotFound: true);
-        m_Movment_Interaction = m_Movment.FindAction("Interaction", throwIfNotFound: true);
+        // Movement
+        m_Movement = asset.FindActionMap("Movement", throwIfNotFound: true);
+        m_Movement_Move = m_Movement.FindAction("Move", throwIfNotFound: true);
+        m_Movement_MouseDelta = m_Movement.FindAction("MouseDelta", throwIfNotFound: true);
+        m_Movement_Interaction = m_Movement.FindAction("Interaction", throwIfNotFound: true);
+        m_Movement_Shoot = m_Movement.FindAction("Shoot", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Close = m_UI.FindAction("Close", throwIfNotFound: true);
-        m_UI_Ennter = m_UI.FindAction("Ennter", throwIfNotFound: true);
+        m_UI_Submit = m_UI.FindAction("Submit", throwIfNotFound: true);
         m_UI_Horizontal = m_UI.FindAction("Horizontal", throwIfNotFound: true);
     }
 
@@ -291,39 +311,44 @@ public class @Input : IInputActionCollection, IDisposable
         asset.Disable();
     }
 
-    // Movment
-    private readonly InputActionMap m_Movment;
-    private IMovmentActions m_MovmentActionsCallbackInterface;
-    private readonly InputAction m_Movment_Move;
-    private readonly InputAction m_Movment_MouseDelta;
-    private readonly InputAction m_Movment_Interaction;
-    public struct MovmentActions
+    // Movement
+    private readonly InputActionMap m_Movement;
+    private IMovementActions m_MovementActionsCallbackInterface;
+    private readonly InputAction m_Movement_Move;
+    private readonly InputAction m_Movement_MouseDelta;
+    private readonly InputAction m_Movement_Interaction;
+    private readonly InputAction m_Movement_Shoot;
+    public struct MovementActions
     {
         private @Input m_Wrapper;
-        public MovmentActions(@Input wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Move => m_Wrapper.m_Movment_Move;
-        public InputAction @MouseDelta => m_Wrapper.m_Movment_MouseDelta;
-        public InputAction @Interaction => m_Wrapper.m_Movment_Interaction;
-        public InputActionMap Get() { return m_Wrapper.m_Movment; }
+        public MovementActions(@Input wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Move => m_Wrapper.m_Movement_Move;
+        public InputAction @MouseDelta => m_Wrapper.m_Movement_MouseDelta;
+        public InputAction @Interaction => m_Wrapper.m_Movement_Interaction;
+        public InputAction @Shoot => m_Wrapper.m_Movement_Shoot;
+        public InputActionMap Get() { return m_Wrapper.m_Movement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(MovmentActions set) { return set.Get(); }
-        public void SetCallbacks(IMovmentActions instance)
+        public static implicit operator InputActionMap(MovementActions set) { return set.Get(); }
+        public void SetCallbacks(IMovementActions instance)
         {
-            if (m_Wrapper.m_MovmentActionsCallbackInterface != null)
+            if (m_Wrapper.m_MovementActionsCallbackInterface != null)
             {
-                @Move.started -= m_Wrapper.m_MovmentActionsCallbackInterface.OnMove;
-                @Move.performed -= m_Wrapper.m_MovmentActionsCallbackInterface.OnMove;
-                @Move.canceled -= m_Wrapper.m_MovmentActionsCallbackInterface.OnMove;
-                @MouseDelta.started -= m_Wrapper.m_MovmentActionsCallbackInterface.OnMouseDelta;
-                @MouseDelta.performed -= m_Wrapper.m_MovmentActionsCallbackInterface.OnMouseDelta;
-                @MouseDelta.canceled -= m_Wrapper.m_MovmentActionsCallbackInterface.OnMouseDelta;
-                @Interaction.started -= m_Wrapper.m_MovmentActionsCallbackInterface.OnInteraction;
-                @Interaction.performed -= m_Wrapper.m_MovmentActionsCallbackInterface.OnInteraction;
-                @Interaction.canceled -= m_Wrapper.m_MovmentActionsCallbackInterface.OnInteraction;
+                @Move.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnMove;
+                @Move.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnMove;
+                @Move.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnMove;
+                @MouseDelta.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnMouseDelta;
+                @MouseDelta.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnMouseDelta;
+                @MouseDelta.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnMouseDelta;
+                @Interaction.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnInteraction;
+                @Interaction.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnInteraction;
+                @Interaction.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnInteraction;
+                @Shoot.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnShoot;
+                @Shoot.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnShoot;
+                @Shoot.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnShoot;
             }
-            m_Wrapper.m_MovmentActionsCallbackInterface = instance;
+            m_Wrapper.m_MovementActionsCallbackInterface = instance;
             if (instance != null)
             {
                 @Move.started += instance.OnMove;
@@ -335,23 +360,26 @@ public class @Input : IInputActionCollection, IDisposable
                 @Interaction.started += instance.OnInteraction;
                 @Interaction.performed += instance.OnInteraction;
                 @Interaction.canceled += instance.OnInteraction;
+                @Shoot.started += instance.OnShoot;
+                @Shoot.performed += instance.OnShoot;
+                @Shoot.canceled += instance.OnShoot;
             }
         }
     }
-    public MovmentActions @Movment => new MovmentActions(this);
+    public MovementActions @Movement => new MovementActions(this);
 
     // UI
     private readonly InputActionMap m_UI;
     private IUIActions m_UIActionsCallbackInterface;
     private readonly InputAction m_UI_Close;
-    private readonly InputAction m_UI_Ennter;
+    private readonly InputAction m_UI_Submit;
     private readonly InputAction m_UI_Horizontal;
     public struct UIActions
     {
         private @Input m_Wrapper;
         public UIActions(@Input wrapper) { m_Wrapper = wrapper; }
         public InputAction @Close => m_Wrapper.m_UI_Close;
-        public InputAction @Ennter => m_Wrapper.m_UI_Ennter;
+        public InputAction @Submit => m_Wrapper.m_UI_Submit;
         public InputAction @Horizontal => m_Wrapper.m_UI_Horizontal;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
@@ -365,9 +393,9 @@ public class @Input : IInputActionCollection, IDisposable
                 @Close.started -= m_Wrapper.m_UIActionsCallbackInterface.OnClose;
                 @Close.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnClose;
                 @Close.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnClose;
-                @Ennter.started -= m_Wrapper.m_UIActionsCallbackInterface.OnEnnter;
-                @Ennter.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnEnnter;
-                @Ennter.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnEnnter;
+                @Submit.started -= m_Wrapper.m_UIActionsCallbackInterface.OnSubmit;
+                @Submit.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnSubmit;
+                @Submit.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnSubmit;
                 @Horizontal.started -= m_Wrapper.m_UIActionsCallbackInterface.OnHorizontal;
                 @Horizontal.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnHorizontal;
                 @Horizontal.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnHorizontal;
@@ -378,9 +406,9 @@ public class @Input : IInputActionCollection, IDisposable
                 @Close.started += instance.OnClose;
                 @Close.performed += instance.OnClose;
                 @Close.canceled += instance.OnClose;
-                @Ennter.started += instance.OnEnnter;
-                @Ennter.performed += instance.OnEnnter;
-                @Ennter.canceled += instance.OnEnnter;
+                @Submit.started += instance.OnSubmit;
+                @Submit.performed += instance.OnSubmit;
+                @Submit.canceled += instance.OnSubmit;
                 @Horizontal.started += instance.OnHorizontal;
                 @Horizontal.performed += instance.OnHorizontal;
                 @Horizontal.canceled += instance.OnHorizontal;
@@ -388,16 +416,17 @@ public class @Input : IInputActionCollection, IDisposable
         }
     }
     public UIActions @UI => new UIActions(this);
-    public interface IMovmentActions
+    public interface IMovementActions
     {
         void OnMove(InputAction.CallbackContext context);
         void OnMouseDelta(InputAction.CallbackContext context);
         void OnInteraction(InputAction.CallbackContext context);
+        void OnShoot(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
         void OnClose(InputAction.CallbackContext context);
-        void OnEnnter(InputAction.CallbackContext context);
+        void OnSubmit(InputAction.CallbackContext context);
         void OnHorizontal(InputAction.CallbackContext context);
     }
 }

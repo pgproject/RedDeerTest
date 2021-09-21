@@ -9,7 +9,7 @@ public abstract class InteractiveObject : MovementObject, IInteractive
         yield break;
     }
     
-    public virtual void Interact()
+    public virtual void Interact(bool innerUse, int floorId)
     {
         StartCoroutine(Move());
     }

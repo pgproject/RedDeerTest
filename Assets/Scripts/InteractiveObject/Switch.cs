@@ -6,24 +6,16 @@ using UnityEngine;
 public class Switch : MonoBehaviour, IInteractive
 {
     [SerializeField] private List<InteractiveObject> m_interactiveObject = new List<InteractiveObject>();
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public void Interact()
+    [SerializeField] private int m_floorId;
+    
+    public void Interact(bool innerUse, int floorId = 0)
     {
         for (int i = 0; i < m_interactiveObject.Count; i++)
         {
             if (CanUse())
-                m_interactiveObject[i].Interact();    
+            {
+                m_interactiveObject[i].Interact(true, m_floorId);
+            }
         }
     }
 

@@ -6,12 +6,17 @@ using UnityEngine;
 
 public class Elevator : InteractiveObject
 {
-
+    [SerializeField] private ElevatorUI m_elevatorUI;
+    [SerializeField] private List<Transform> m_floorsTransform = new List<Transform>();
     private bool m_isMove;
+    private int m_currentFloorId;
     public bool IsMove => m_isMove;
    
     protected override IEnumerator Move()
     {
+        m_startPosition = transform.position.y;
+        m_endPosition = m_floorsTransform[m_currentFloorId].position.y;
+        
         m_isMove = true;
         while (true)
         {
@@ -22,25 +27,46 @@ public class Elevator : InteractiveObject
 
             if (m_normalize == 1)
             {
+                m_isMove = false;
                 yield break;
-                m_moveDirection = !m_moveDirection;
             }
-            else if (m_normalize == 0)
+            if (m_normalize == 0)
             {
+                m_isMove = false;
                 yield break;
-                m_moveDirection = !m_moveDirection;
             }
             yield return new WaitForFixedUpdate();
         }
     }
 
-    public void Interact()
+    public override void Interact(bool innerUse, int floorId)
     {
-        StartCoroutine(Move());
+        if (innerUse)
+        {
+            Debug.Log(floorId);
+            if(m_currentFloorId == floorId)
+            {
+                return;
+            }
+            m_endPosition = m_floorsTransform[floorId].position.y;
+            m_normalize = 0;
+            m_currentFloorId = floorId;
+            StartCoroutine(Move());
+        }
+        else
+        {
+            m_elevatorUI.OpenClose();
+        }
+        
     }
 
     public override bool CanUse()
     {
         return !m_isMove;
+    }
+
+    public void SetFloor(Vector3 floorPosition)
+    {
+        m_endPosition = floorPosition.y;
     }
 }

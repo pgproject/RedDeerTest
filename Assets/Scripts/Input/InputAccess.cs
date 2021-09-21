@@ -15,6 +15,17 @@ public class InputAccess
         
     }
     
+    private PlayerInput m_playerInputActionAsset;
+    public PlayerInput PlayerInput => m_playerInputActionAsset;
+    [SerializeField] private InputActionAsset m_inputAsset;
+    public InputActionAsset InputAsset => m_inputAsset;
+
+    private const string m_actionUIMapId = "UI";
+    public string ActionUIMapId => m_actionUIMapId;
+
+    private const string m_actionMovementMapId = "Movement";
+    public string ActionMovementMapId => m_actionMovementMapId;
+    
     [SerializeField] private InputActionProperty m_mouseDelta;
     public InputActionProperty MouseDelta => m_mouseDelta;
 
@@ -24,4 +35,22 @@ public class InputAccess
     [SerializeField] private InputActionProperty m_interactionButton;
     public InputActionProperty InteractionButton => m_interactionButton;
 
+    [SerializeField] private InputActionProperty m_closeUIButton;
+    public InputActionProperty CloseUIButton => m_closeUIButton;
+
+    [SerializeField] private InputActionProperty m_submitButton;
+    public InputActionProperty SubmitButton => m_submitButton;
+
+    [SerializeField] private InputActionProperty m_shootAction;
+    public InputActionProperty ShootAction => m_shootAction;
+
+    public void ChangeMap(string actionMapId)
+    {
+        m_playerInputActionAsset.SwitchCurrentActionMap(actionMapId);
+    }
+
+    public void SetActionInputAsset(PlayerInput playerInput)
+    {
+        m_playerInputActionAsset = playerInput;
+    }
 }

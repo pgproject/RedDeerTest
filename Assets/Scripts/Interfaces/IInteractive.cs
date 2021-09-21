@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface IInteractive
 {
-   void Interact();
+   void Interact(bool innerUse, int floorId = 0);
 
    bool CanUse();
 }

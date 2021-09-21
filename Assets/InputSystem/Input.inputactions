@@ -2,7 +2,7 @@
     "name": "Input",
     "maps": [
         {
-            "name": "Movment",
+            "name": "Movement",
             "id": "ebac2b84-ca4c-4999-9985-a0c205d3986a",
             "actions": [
                 {
@@ -25,6 +25,14 @@
                     "name": "Interaction",
                     "type": "Button",
                     "id": "4f4f9a0f-a472-4651-9db9-5c66ff0eb17d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Shoot",
+                    "type": "Button",
+                    "id": "1e0b51c5-856f-42b5-9923-ef7d63db3026",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -107,6 +115,17 @@
                     "action": "Interaction",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "426a7700-0960-417d-a3cd-4f242a3d3a9d",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Shoot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -123,7 +142,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Ennter",
+                    "name": "Submit",
                     "type": "Button",
                     "id": "6a92f795-24e7-485e-850e-48314419f47f",
                     "expectedControlType": "Button",
@@ -158,7 +177,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Ennter",
+                    "action": "Submit",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
