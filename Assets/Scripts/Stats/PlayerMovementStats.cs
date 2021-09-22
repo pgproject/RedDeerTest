@@ -23,4 +23,8 @@ public class PlayerMovementStats
 
     [SerializeField] private float m_maxYRotation;
     public float MaxYRotation => m_maxYRotation;
+
+    [SerializeField] private float m_jumpHeight;
+    public float JumpHeight => m_jumpHeight;
+
 }

@@ -13,7 +13,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Text m_secondsText;
 
     [SerializeField] private Text m_resultText;
-
+    [SerializeField] private Text m_jumpCounter;
+    
     private const int UNIT_TIME = 60;
     private const int ADD_ZERO_TO_TEXT = 10;
     private int m_hours;
@@ -70,9 +71,15 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void SetResult()
+    public void SetResultScore()
     {
         m_result++;
         m_resultText.text = m_result.ToString();
     }
+
+    public void CountJump(int amountOfJump)
+    {
+        m_jumpCounter.text = amountOfJump.ToString();
+    }
+    
 }

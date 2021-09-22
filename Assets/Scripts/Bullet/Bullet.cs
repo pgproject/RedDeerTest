@@ -10,7 +10,6 @@ public class Bullet : MonoBehaviour
     [SerializeField] private Camera m_camera;
     [SerializeField] private float m_speed;
     [SerializeField] private float m_timeToSwitchOff;
-    [SerializeField] private Pool m_bulletPool;
     [SerializeField] private Rigidbody m_rigidbody;
     private Vector3 m_direction;
     

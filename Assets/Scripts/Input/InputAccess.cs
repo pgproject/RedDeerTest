@@ -44,6 +44,9 @@ public class InputAccess
     [SerializeField] private InputActionProperty m_shootAction;
     public InputActionProperty ShootAction => m_shootAction;
 
+    [SerializeField] private InputActionProperty m_jumpAction;
+    public InputActionProperty JumpAction => m_jumpAction;
+
     public void ChangeMap(string actionMapId)
     {
         m_playerInputActionAsset.SwitchCurrentActionMap(actionMapId);

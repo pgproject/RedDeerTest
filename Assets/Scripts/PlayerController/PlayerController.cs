@@ -10,11 +10,19 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private InteractWithObject m_interactWithObject;
     [SerializeField] private PlayerInput m_playerInput;
     [SerializeField] private Shooting m_shooting;
+    [SerializeField] private UIManager m_uiManager;
     private float m_movingSpeed => GeneralAccess.Instance.PlayerMovementStats.SpeedMoving;
+    private float m_jumpHeight => GeneralAccess.Instance.PlayerMovementStats.JumpHeight;
+    
     private InputAccess m_inputAccess => GeneralAccess.Instance.InputAccess;
     private InputAction m_move => m_inputAccess.Move.reference;
     private InputAction m_interaction => m_inputAccess.InteractionButton.reference;
     private InputAction m_shootAction => m_inputAccess.ShootAction.reference;
+    private InputAction m_jumpAction => m_inputAccess.JumpAction.reference;
+    private bool m_isGround;
+
+    private int m_countJump;
+    private const int LAYER_GROUND = 8;
     
     private void Start()
     {
@@ -40,11 +48,33 @@ public class PlayerController : MonoBehaviour
         {
             m_shooting.Shoot();
         }
+
+        if (m_jumpAction.triggered && m_isGround)
+        {
+            m_rigidbody.velocity = new Vector3(0, m_jumpHeight, 0);
+            m_countJump++;
+            m_uiManager.CountJump(m_countJump);
+        }
     }
 
     private void OnValidate()
     {
         m_rigidbody = GetComponent<Rigidbody>();
     }
-    
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.layer == LAYER_GROUND)
+        {
+            m_isGround = true;
+        }
+    }
+
+    private void OnCollisionExit(Collision other)
+    {
+        if (other.gameObject.layer == LAYER_GROUND)
+        {
+            m_isGround = false;
+        }
+    }
 }

@@ -128,6 +128,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_camera: {fileID: 0}
   m_speed: 10
-  m_timeToSwitchOff: 2
+  m_timeToSwitchOff: 4
   m_bulletPool: {fileID: 0}
   m_rigidbody: {fileID: 7278731007250485556}
