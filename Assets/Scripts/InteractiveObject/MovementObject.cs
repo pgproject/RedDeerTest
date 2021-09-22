@@ -12,14 +12,14 @@ public abstract class MovementObject : MonoBehaviour
     [SerializeField] protected Rigidbody m_rigidbody;
     [SerializeField] protected float m_speed;
     protected float m_length => Mathf.Abs(m_startPosition) + Mathf.Abs(m_endPosition);
-    
-    protected virtual Vector2 m_startPoint => new Vector2(transform.position.x, m_startPosition);
 
-    protected virtual Vector2 m_endPoint => new Vector2(transform.position.x, m_endPosition);
+    protected virtual Vector3 m_startPoint => new Vector3(transform.position.x, m_startPosition, transform.position.z);
+
+    protected virtual Vector3 m_endPoint => new Vector3(transform.position.x, m_endPosition, transform.position.z);
 
     protected abstract IEnumerator Move();
     protected bool m_moveDirection;
-    protected float m_normalize;
+    [SerializeField] protected float m_normalize;
 
     protected virtual void OnValidate()
     {

@@ -80,9 +80,21 @@ MonoBehaviour:
         m_Interactions: 
         m_SingletonActionBindings: []
       m_Reference: {fileID: -5464984471488738415, guid: 21386b387ccbc4d48af40d6ad4cebbf1, type: 3}
+    m_jumpAction:
+      m_UseReference: 1
+      m_Action:
+        m_Name: Jump
+        m_Type: 0
+        m_ExpectedControlType: 
+        m_Id: 2fec41cd-578e-426f-868f-1921057106cf
+        m_Processors: 
+        m_Interactions: 
+        m_SingletonActionBindings: []
+      m_Reference: {fileID: -7990152161908775044, guid: 21386b387ccbc4d48af40d6ad4cebbf1, type: 3}
   m_playerMovementStats:
     m_smoothingCamera: 4
     m_mouseSensitivity: 0.5
     m_speedMoving: 2
     m_minYRotation: -70
     m_maxYRotation: 70
+    m_jumpHeight: 4

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Shooting : MonoBehaviour
@@ -9,6 +7,6 @@ public class Shooting : MonoBehaviour
     
     public void Shoot()
     {
-        GameObject bullet = m_bulletPool.GetObject(m_startTransform.position);
+        m_bulletPool.GetObject(m_startTransform.position);
     }
 }
