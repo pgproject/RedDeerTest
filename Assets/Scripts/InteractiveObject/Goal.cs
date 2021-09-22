@@ -7,5 +7,6 @@ public class Goal : MonoBehaviour
     public void IncrementResult()
     {
         m_uiManager.SetResultScore();
+        Destroy(this.gameObject);
     }
 }

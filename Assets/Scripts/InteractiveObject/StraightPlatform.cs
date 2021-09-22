@@ -46,6 +46,22 @@ public class StraightPlatform : MovementObject
 
    private void Start()
    {
+      if (m_platformType == PlatformMoveType.X_Axis)
+      {
+         m_startPosition = m_startPosition + transform.position.x;
+         m_endPosition = m_endPosition + transform.position.x;
+      }
+      else if (m_platformType == PlatformMoveType.Y_Axis)
+      {
+         m_startPosition = m_startPosition + transform.position.y;
+         m_endPosition = m_endPosition + transform.position.y;
+      }
+      else
+      {
+         m_startPosition = m_startPosition + transform.position.z;
+         m_endPosition = m_endPosition + transform.position.z;
+      }
+
       StartCoroutine(Move());
    }
 

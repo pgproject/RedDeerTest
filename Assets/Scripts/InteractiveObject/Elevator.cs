@@ -23,7 +23,7 @@ public class Elevator : InteractiveObject
             m_normalize += Time.fixedDeltaTime / m_length * m_speed * (m_moveDirection ? -1 : 1);
             m_normalize = Mathf.Clamp01(m_normalize);
 
-            m_rigidbody.MovePosition(Vector2.Lerp(m_startPoint, m_endPoint, Mathf.SmoothStep(0, 1, m_normalize)));
+            m_rigidbody.MovePosition(Vector3.Lerp(m_startPoint, m_endPoint, Mathf.SmoothStep(0, 1, m_normalize)));
 
             if (m_normalize == 1)
             {
@@ -43,7 +43,6 @@ public class Elevator : InteractiveObject
     {
         if (innerUse)
         {
-            Debug.Log(floorId);
             if(m_currentFloorId == floorId)
             {
                 return;
@@ -68,5 +67,10 @@ public class Elevator : InteractiveObject
     public void SetFloor(Vector3 floorPosition)
     {
         m_endPosition = floorPosition.y;
+    }
+
+    public void ButtonInElevator()
+    {
+        m_elevatorUI.SetButton(this);
     }
 }

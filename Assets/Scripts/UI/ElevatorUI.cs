@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ElevatorUI : MonoBehaviour
@@ -7,6 +8,7 @@ public class ElevatorUI : MonoBehaviour
     private string UIMap => m_inputAccess.ActionUIMapId;
     private string MovementMap => m_inputAccess.ActionMovementMapId;
     [SerializeField] private bool m_isOpen;
+    [SerializeField] private List<ButtonInElevator> m_buttonsElevator = new List<ButtonInElevator>();
     
     public void OpenClose()
     {
@@ -16,5 +18,13 @@ public class ElevatorUI : MonoBehaviour
         m_inputAccess.ChangeMap(actionMapId);
         
         m_uiElevator.SetActive(m_isOpen);
+    }
+
+    public void SetButton(Elevator elevator)
+    {
+        for (int i = 0; i < m_buttonsElevator.Count; i++)
+        {
+            m_buttonsElevator[i].SetElevator(elevator);
+        }
     }
 }

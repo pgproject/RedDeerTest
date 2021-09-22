@@ -94,7 +94,7 @@ MonoBehaviour:
   m_playerMovementStats:
     m_smoothingCamera: 4
     m_mouseSensitivity: 0.5
-    m_speedMoving: 2
+    m_speedMoving: 6
     m_minYRotation: -70
     m_maxYRotation: 70
     m_jumpHeight: 4

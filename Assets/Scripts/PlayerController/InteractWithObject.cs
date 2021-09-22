@@ -15,6 +15,9 @@ public class InteractWithObject : MonoBehaviour
         if (other.gameObject.layer == LAYER_INTERACTIVE)
         {
             m_interactiveObject.Add(other.GetComponent<IInteractive>());
+            
+            if(other.GetComponent<Elevator>() != null)
+                other.GetComponent<Elevator>().ButtonInElevator();
         }
     }
 

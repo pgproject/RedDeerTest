@@ -128,5 +128,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_camera: {fileID: 0}
   m_speed: 20
-  m_timeToSwitchOff: 3
+  m_timeToSwitchOff: 2
   m_rigidbody: {fileID: 7278731007250485556}
